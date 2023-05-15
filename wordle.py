@@ -30,8 +30,6 @@ class Wordle:
                 letter.is_in_word = True
                 new_secret[i] = self.DELETED_CHAR
 
-            print("new result: (in position)")
-            print (*result, sep="\n")
             result.append(letter)
         
         for i in range(self.MAX_WORD_SIZE) :
@@ -41,10 +39,6 @@ class Wordle:
 
             if let.is_in_word :
                 new_secret[new_secret.index(let.char)]= self.DELETED_CHAR
-            print(new_secret)
-            print("new result: (in word)")
-            print (*result, sep="\n")
-
        
         return result
 
