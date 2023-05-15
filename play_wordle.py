@@ -13,12 +13,6 @@ def main ():
    
     wordle = Wordle(secret)
 
-    # testing
-    # print(wordle.can_still_play)
-    # print(wordle.attempts)
-    # print(wordle.game_won)
-    # print(wordle.remaining_attempts)
-    # print(wordle.secret)
 
     while wordle.can_still_play :
 
@@ -33,10 +27,6 @@ def main ():
         # append the valid guess to the attemps list
         wordle.new_attempt (word)
         display_results(wordle)
-
-        # checking if letters of the guess are in word/position
-        # result = wordle.check_existance_postion(word)
-        # print(*result, sep="\n")
 
     # this ones self explanatory x)
     if wordle.game_won :
@@ -56,20 +46,20 @@ def load_word_set(path: str):
 def display_results(wordle: Wordle):
     print ("\n")
 
-    # lines = []
+    lines = []
 
     for word in wordle.attempts :
         letters = wordle.check_existance_postion(word)
         colored_letters_str = letters_to_colors(letters)
         print(colored_letters_str)
-        # lines.append(colored_letters_str)
+        lines.append(colored_letters_str)
     
     for _ in range(wordle.remaining_attempts) :
-        print("_ " * wordle.MAX_WORD_SIZE)
-        # lines.append("_ " * wordle.MAX_WORD_SIZE)
+        #print("_ " * wordle.MAX_WORD_SIZE)
+        lines.append("_ " * wordle.MAX_WORD_SIZE)
     
     # The border is ugly unfortunately :(
-    # border(lines , 9, 2)
+    border(lines , 9, 2)
        
 
 def letters_to_colors (result):
