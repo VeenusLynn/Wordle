@@ -5,11 +5,12 @@ from colorama import Fore, Back, Style
 import random
 import nltk
 
-# this is a one time download of the words corpus from nltk
-# you should comment this line after the first run
+# this is a one time download of the words and brown corpus from nltk
+# you should comment these lines after the first run
 
 #######################
 # nltk.download('words')
+# nltk.download('brown')
 #######################
 
 def main ():
@@ -46,7 +47,8 @@ def main ():
 def load_word_set():
     english_words = set(nltk.corpus.words.words())
     word_set = set(word.upper() for word in english_words if len(word) == 5)
-    return word_set
+    freq_words = set(w.upper() for w in nltk.corpus.brown.words() if w.upper() in word_set)
+    return freq_words
 
 
 
