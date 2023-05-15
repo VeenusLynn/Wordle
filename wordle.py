@@ -4,6 +4,7 @@ class Wordle:
     
     MAX_ATTEMPTS = 6
     MAX_WORD_SIZE = 5
+    DELETED_CHAR = "*"
 
     def __init__(self, secret: str ):
         self.secret: str = secret.upper()
@@ -13,16 +14,30 @@ class Wordle:
         return len(word) == self.MAX_WORD_SIZE
 
     def check_existance_postion(self, word: str):
+        word.upper()
 
         result = []
-        
+        new_secret = list(self.secret)
+
         for i in range(self.MAX_WORD_SIZE) :
-            char =word[i]
+
+            char = word[i]
             letter = Letter_State(char)
-            letter.is_in_word = char in self.secret 
-            letter.is_in_position = char == self.secret[i]
+
+            letter.is_in_position = char == new_secret[i]
+
+            if letter.is_in_position:
+                letter.is_in_word = True
+                new_secret[i] = self.DELETED_CHAR
+                result.append(letter)
+                continue
+
             result.append(letter)
         
+        for i in range(self.MAX_WORD_SIZE) :
+            let = result[i]
+            let.is_in_word = let.char in new_secret
+
         return result
 
     @property
