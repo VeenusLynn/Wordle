@@ -75,8 +75,7 @@ def display_results(wordle: Wordle):
         #print("_ " * wordle.MAX_WORD_SIZE)
         lines.append("_ " * (wordle.MAX_WORD_SIZE-1) + "_")
     
-    # The border is ugly unfortunately :(
-    border(lines , 9, 2)
+    border(lines ,(wordle.MAX_WORD_SIZE)*2-1 ,2)
        
 
 def letters_to_colors (result):
@@ -94,7 +93,7 @@ def letters_to_colors (result):
 
 def border (lines, size: int, pad: int) :
 
-    content_length = size + pad + 2
+    content_length = size + pad*2
 
     top_border = "┌" + "─" * content_length + "┐"
     bot_border = "└" + "─" * content_length + "┘"
