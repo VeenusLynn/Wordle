@@ -3,12 +3,20 @@ from wordle import Wordle
 from letter_state import Letter_State
 from colorama import Fore, Back, Style
 import random
+import nltk
+
+# this is a one time download of the words corpus from nltk
+# you should comment this line after the first run
+
+#######################
+nltk.download('words')
+#######################
 
 def main ():
 
     # picking a random secret word to play with from our data
-    input_file_path = "data/Wordle_words.txt"
-    word_set = load_word_set (input_file_path)
+
+    word_set = load_word_set()
     secret = random.choice(list(word_set))
    
     wordle = Wordle(secret)
@@ -19,10 +27,10 @@ def main ():
         # ask the player for a a valid word 
         while True :
             word= input (Style.BRIGHT + "\nEnter your guess : "+ Style.RESET_ALL).upper()
-            if wordle.valid_guess(word) :
+            if wordle.valid_guess(word) and is_valid_word(word, word_set):
                 break
             else :
-                print(Fore.RED + f"invalid guess, it must be {wordle.MAX_WORD_SIZE} characters long \ntry again" + Style.RESET_ALL)
+                print(Fore.RED + f"invalid guess, it must be a {wordle.MAX_WORD_SIZE} characters long valid word \ntry again" + Style.RESET_ALL)
 
         # append the valid guess to the attemps list
         wordle.new_attempt (word)
@@ -35,13 +43,20 @@ def main ():
         print(Fore.WHITE + Back.RED + "You lost the game." + Style.RESET_ALL) 
         print(f"The secret word was : {secret} \nBetter luck next time!")
 
-def load_word_set(path: str):
-    word_set = set ()
-    with open(path, "r") as f:
-        for line in f.readlines() :
-            word = line.strip().upper()
-            word_set.add(word)
+def load_word_set():
+    english_words = set(nltk.corpus.words.words())
+    word_set = set(word.upper() for word in english_words if len(word) == 5)
     return word_set
+
+
+
+
+def is_valid_word(word, word_set):
+    """
+    Checks if a word is a valid word by looking it up in the word_set.
+    """
+    return word in word_set
+
 
 def display_results(wordle: Wordle):
     print ("\n")
@@ -80,7 +95,7 @@ def border (lines, size: int, pad: int) :
     content_length = size +pad
 
     top_border = "┌" + "─" * content_length + "┐"
-    bot_border = "└"+ "─" * content_length + "┘"
+    bot_border = "└" + "─" * content_length + "┘"
     left_border = "│" + " " * pad
     right_border = " " * pad + "│" 
 
