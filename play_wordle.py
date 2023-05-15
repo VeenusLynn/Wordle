@@ -19,7 +19,7 @@ def main ():
     word_set = load_word_set()
     secret = random.choice(list(word_set))
    
-    wordle = Wordle("mercy")
+    wordle = Wordle(secret)
 
 
     while wordle.can_still_play :
