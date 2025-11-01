@@ -1,9 +1,11 @@
 from ast import List
 from wordle import Wordle 
 from letter_state import Letter_State
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style, init
 import random
 import nltk
+
+init(autoreset=True)
 
 # this is a one time download of the words and brown corpus from nltk
 # you should comment these lines after the first run
